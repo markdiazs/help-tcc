@@ -1,14 +1,14 @@
 @extends('layouts.adminlte',["current" => "Início"])
 
 @section('body')
-<div class="col-12 col-sm-6 col-md-3">
+<div class="col-12 col-sm-6 col-md-4">
             <div class="info-box">
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-file-contract"></i></span>
 
               <div class="info-box-content">
                 <span style="text-transform: uppercase; font-weight: 400;" class="info-box-text">Trabalhos cadastrados</span>
                 <span style="font-size: 16px; class="info-box-number">
-                  {{$qtd_licitacoes}}
+                  {{$qtdtrabalhos}}
                 </span>
               </div>
               <!-- /.info-box-content -->
@@ -16,43 +16,29 @@
             <!-- /.info-box -->
           </div>
           <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-lock"></i></span>
-
-              <div class="info-box-content">
-                <span style="text-transform: uppercase; font-weight: 400;" class="info-box-text">Trabalhos Pendentes</span>
-                <span style="font-size: 16px;" class="info-box-number">{{$qtd_abertas}}</span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-
           <!-- fix for small devices only -->
           <div class="clearfix hidden-md-up"></div>
 
-          <div class="col-12 col-sm-6 col-md-3">
+          <div class="col-12 col-sm-6 col-md-4">
             <div class="info-box mb-3">
               <span class="info-box-icon bg-success elevation-1"><i class="fas fa-ambulance"></i></span>
 
               <div class="info-box-content">
                 <span style="text-transform: uppercase; font-weight: 400;" class="info-box-text">Trabalhos sem Orientador</span>
-                <span style="font-size: 16px;" class="info-box-number">{{$qtd_fechadas}}</span>
+                <span style="font-size: 16px;" class="info-box-number">{{$trabalhosalone}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
           </div>
           <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
+          <div class="col-12 col-sm-6 col-md-4">
             <div class="info-box mb-3">
               <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-clipboard-list"></i></span>
 
               <div class="info-box-content">
                 <span style="text-transform: uppercase; font-weight: 400;" class="info-box-text">Meus trabalhos</span>
-                <span style="font-size: 16px;" class="info-box-number">{{count($modalidades)}}</span>
+                <span style="font-size: 16px;" class="info-box-number">{{$mytrabalhos}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -61,60 +47,130 @@
           <!-- /.col -->
 
 
-          <div class="box" style="width: 100%;">
-            <!-- /.box-header -->
-            <div class="box-body no-padding">
-              <table class="table table-condensed">
-                <tbody><tr>
-                  <th style="width: 10px">Número</th>
-                  <th>Modalidade</th>
-                  <th>Situação</th>
-                  <th>Data</th>
-                  <th>Vencedor</th>
-                  <th>ações</th>
-                </tr>
-                @foreach ($result as $l)
-                <tr>
-                  <td>{{$l->numero}}</td>
-                  <td>{{$l->titulo}}</td>
-                  <td>@if($l->situacao == 1) <span class="badge bg-success">Aberta</span> @else <span class="badge bg-danger">Fechada</span> @endif</td>
-                  <td>{{$l->data_abertura}}</td>
-                  <td>{{$l->nome_vendedor}}</td>
-                  <td>
-                    <a href="/licitacao/editar/{{$l->id}}" class="btn btn-sm btn-warning" >Editar</a>
-                    <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-danger">Excluir</a>
-                  </td>
-                </tr>
-
-          <div class="modal fade show" id="modal-danger" aria-modal="true">
-        <div class="modal-dialog">
-          <div class="modal-content bg-danger">
-            <div class="modal-header">
-              <h4 class="modal-title">A operação não podera ser disfeita</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
+          <div class="card card-info" style="width: 100%; margin: 0 auto;">
+              <div class="card-body table-responsive p-0">
+              <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Título</th>
+                      <th>Tema</th>
+                      <th>Autor</th>
+                      <th>Orientador</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      @if(count($trabalhos) > 0)
+                      @foreach($trabalhos as $t)
+                    <tr>
+                      <td style="font-size: 15px;">{{$t->titulo}}</td>
+                      <td style="font-size: 15px;">{{$t->tema->titulo}}</td>
+                      <td style="font-size: 15px;">{{$t->user->name}}</td>
+                      <td style="font-size: 15px;">
+                        @if($t->orientador != null)
+                            Prof° {{$t->orientador->name}}
+                        @else 
+                            <i class="far fa-frown"></i> Sem orientador
+                        @endif
+                      </td>
+                      <td>
+                          <div class="row">
+                          <form action="{{route('trabalho.show')}}" method="POST">
+                              {{csrf_field()}}
+                              <input type="hidden" value="{{$t->id}}" name="trabalho_id">
+                              <button type="submit" style="margin: 0 10px;" class="btn-sm btn btn-button btn-default" title="visualizar trabalho"><i class="fas fa-eye"></i></button>
+                            </form>
+                          
+                          
+                          <form action="{{route('trabalho.edit')}}" method="POST">
+                          {{csrf_field()}}
+                          <input type="hidden" name="trabalho_id" value="{{$t->id}}">
+                          <button style="margin: 0 10px;" type="submit" class="btn-sm btn btn-button btn-default" title="Editar trabalho"><i class="fas fa-edit"></i></button>
+                          </form>
+                          @if(!isset($t->orientador))
+                          <form action="{{route('usuario.orientar')}}" method="POST">
+                          {{csrf_field()}}
+                          <input type="hidden" value="{{$t->id}}" name="trabalho_id">
+                          <input type="hidden" value="{{$t->user->id}}" name="autor_id">
+                          <button type="submit" style="margin: 0 10px;" class="btn-sm btn btn-button btn-default" title="Orientar"><i class="fas fa-chalkboard-teacher"></i></button>
+                          </form>
+                          @endif
+                          <form action="{{route('trabalho.delete')}}" method="POST">
+                            {{ csrf_field()}}
+                            <input type="hidden" value="{{$t->id}}" name="trabalho_id">
+                            <button style="margin: 0 10px;" type="submit" class="btn-sm btn btn-button btn-danger" title="Excluir trabalho"><i class="fas fa-trash"></i></button>
+                          </form>
+                          </div>
+                          
+                      </td>
+                    </tr>
+                    @endforeach
+                    @else
+                    <div style="margin-top: 20px;" class="alert alert-info alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                      <h6><i class="fas fa-info-circle"></i> <b> Não há registros correspondes</b></h6>
+                    </div>
+                    @endif
+                  </tbody>
+                </table>
+                @if(isset($filters))
+                {!! $trabalhos->appends(Request::all())->links() !!}
+                @else 
+                {!! $trabalhos->links() !!}
+                @endif
+              </div>
+              <div class="card-footer">
+                    <form action="{{route('trabalho.search')}}" method="GET">
+                    {{csrf_field()}}
+                        <div class="form-group">
+                            <label for="search"><i class="fas fa-filter"></i> Filtrar:</label>
+                        </div>
+                        <div class="row" style="width: 100%;">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="job-title">título:</label>
+                                    <input type="text" class="form-control form-control-sm" name="titulo_trabalho" placeholder="buscar por título" @if(isset($filters['titulo'])) value="{{$filters['titulo']}}" @endif>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="job-title">Tema:</label>
+                                    <select class="form-control form-control-sm" name="tema_id" id="">
+                                    <option selected value=""></option>
+                                        @foreach($temas as $t)
+                                        @if(isset($filters['tema_id']) && $filters['tema_id'] == $t->id)
+                                        <option selected value="{{$t->id}}">{{$t->titulo}}</option>
+                                        @else 
+                                        <option value="{{$t->id}}">{{$t->titulo}}</option>
+                                        @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="job-title">Orientador:</label>
+                                    <select class="form-control form-control-sm" name="orientador_id" id="">
+                                    <option selected value=""></option>
+                                    @foreach($orientadores as $o)
+                                    @if(isset($filters['orientador_id']) && $filters['orientador_id'] == $o->id)
+                                    <option selected value="{{$o->id}}">Prof° {{$o->name}}</option>
+                                    @else 
+                                    <option value="{{$o->id}}">Prof° {{$o->name}}</option>
+                                    @endif
+                                    @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-sm btn-default"><i class="fas fa-search"></i> Buscar</button>
+                                <a href="{{route('trabalho.index')}}" class="btn btn-sm btn-default"><i class="fas fa-filter"></i> Limpar filtros</a>
+                            </div>
+                        </div>
+                    </form>
+              </div>
+              <!-- /.card-body -->
             </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-outline-light" data-dismiss="modal">fechar</button>
-              <form action="/licitacao/delete/{{$l->id}}" method="POST">
-              @csrf
-              <button type="submit" class="btn btn-outline-light">excluir</button>
-              </form>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-                @endforeach
-              </tbody>
-            </table>
-            </div>
-            {{ $result->links() }}
-            <!-- /.box-body -->
-          </div>
 
 @endsection

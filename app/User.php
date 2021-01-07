@@ -118,7 +118,7 @@ class User extends Authenticatable
                     ->where('name','LIKE',"%{$data['name']}%")
                     ->where('email','=',$data['email']);
                 }
-           })->get();
+           });
         return $users;
     }
 

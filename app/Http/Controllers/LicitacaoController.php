@@ -6,6 +6,9 @@ use App\Anexo;
 use App\Licitacao;
 use Illuminate\Http\Request;
 use App\Modalidade;
+use App\Tema;
+use App\Trabalho;
+use App\User;
 use DateTime;
 use Facade\FlareClient\Http\Response;
 use Facade\FlareClient\Stacktrace\File;
@@ -45,8 +48,15 @@ class LicitacaoController extends Controller
         $qtd_licitacoes = count(DB::table('licitacoes')->select('*')->get());
         $qtd_abertas = count(DB::table('licitacoes')->where('situacao', 1)->get());
         $qtd_fechadas = count(DB::table('licitacoes')->where('situacao', 0)->get());
+
+        $qtdtrabalhos = Trabalho::all()->count();
+        $trabalhosalone = Trabalho::where('orientador_id','=',null)->get()->count();
+        $mytrabalhos = Trabalho::where('user_id',$user->id)->orWhere('orientador_id',$user->id)->get()->count();
+        $trabalhos = Trabalho::select('*')->paginate(5);
+        $orientadores = User::getOrientadores();
+        $temas = Tema::all();
  
-        return view('dashboard', ['modalidades' => $modalidades,'result' => $licitacao,'anexo' => $anexos, 'qtd_licitacoes' => $qtd_licitacoes,'qtd_abertas' => $qtd_abertas, 'qtd_fechadas' => $qtd_fechadas, 'user' => $user]);
+        return view('dashboard',compact('qtdtrabalhos','trabalhosalone','mytrabalhos', 'user', 'orientadores','temas','trabalhos'));
 
     }
 

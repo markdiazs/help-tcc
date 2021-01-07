@@ -35,7 +35,7 @@ class UsuarioController extends Controller
 
     public function index()
     {
-        $users = User::all();
+        $users = User::select('*')->paginate(7);
         $papeis = Papel::all();
         $user = Auth::user();
         return view('admin.usuario.index',compact('user','users','papeis'));
@@ -201,7 +201,7 @@ class UsuarioController extends Controller
         $filters = $data;
         $user = Auth::user();
         $papeis = Papel::all();
-        $users = User::searchFilter($data);
+        $users = User::searchFilter($data)->paginate(5);
 
         if (count($users) <= 0){
 

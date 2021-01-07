@@ -62,13 +62,22 @@
                     </tr>
                     @endforeach
                     @else
-                    <h1>Não possui trabalhos cadastrados</h1>
+                    <div style="margin-top: 20px;" class="alert alert-info alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                      <h6><i class="fas fa-info-circle"></i> <b> Não há registros correspondes</b></h6>
+                    </div>
                     @endif
                   </tbody>
                 </table>
+                @if(isset($filters))
+                {!! $trabalhos->appends(Request::all())->links() !!}
+                @else 
+                {!! $trabalhos->links() !!}
+                @endif
               </div>
               <div class="card-footer">
-                    <form action="">
+                    <form action="{{route('trabalho.search')}}" method="GET">
+                    {{csrf_field()}}
                         <div class="form-group">
                             <label for="search"><i class="fas fa-filter"></i> Filtrar:</label>
                         </div>
@@ -76,29 +85,36 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="job-title">título:</label>
-                                    <input type="text" class="form-control form-control-sm" name="job-title" name="job-title" placeholder="buscar por título" />
+                                    <input type="text" class="form-control form-control-sm" name="titulo_trabalho" placeholder="buscar por título" @if(isset($filters['titulo'])) value="{{$filters['titulo']}}" @endif>
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="job-title">Tema:</label>
-                                    <select class="form-control form-control-sm" name="" id="">
-                                        <option selected value=""></option>
-                                        <option value="">banco de dados</option>
-                                        <option value="">banco de dados</option>
-                                        <option value="">banco de dados</option>
-                                        <option value="">banco de dados</option>
+                                    <select class="form-control form-control-sm" name="tema_id" id="">
+                                    <option selected value=""></option>
+                                        @foreach($temas as $t)
+                                        @if(isset($filters['tema_id']) && $filters['tema_id'] == $t->id)
+                                        <option selected value="{{$t->id}}">{{$t->titulo}}</option>
+                                        @else 
+                                        <option value="{{$t->id}}">{{$t->titulo}}</option>
+                                        @endif
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="job-title">Orientador:</label>
-                                    <select class="form-control form-control-sm" name="" id="">
+                                    <select class="form-control form-control-sm" name="orientador_id" id="">
                                     <option selected value=""></option>
-                                    <option value="">Prof° Marcio Veraz</option>
-                                    <option value="">Prof° Marcio Veraz</option>
-                                    <option value="">Prof° Marcio Veraz</option>
+                                    @foreach($orientadores as $o)
+                                    @if(isset($filters['orientador_id']) && $filters['orientador_id'] == $o->id)
+                                    <option selected value="{{$o->id}}">Prof° {{$o->name}}</option>
+                                    @else 
+                                    <option value="{{$o->id}}">Prof° {{$o->name}}</option>
+                                    @endif
+                                    @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -106,7 +122,7 @@
                         <div class="row">
                             <div class="form-group">
                                 <button type="submit" class="btn btn-sm btn-default"><i class="fas fa-search"></i> Buscar</button>
-                                <a href="#" class="btn btn-sm btn-default"><i class="fas fa-filter"></i> Limpar filtros</a>
+                                <a href="{{route('trabalho.index')}}" class="btn btn-sm btn-default"><i class="fas fa-filter"></i> Limpar filtros</a>
                             </div>
                         </div>
                     </form>

@@ -20,8 +20,11 @@ class TrabalhoController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $trabalhos = Trabalho::all();
-        return view('admin.trabalho.index',compact('user','trabalhos'));
+        $trabalhos = Trabalho::select('*')->paginate(5);
+        $orientadores = User::getOrientadores();
+        $temas = Tema::all();
+
+        return view('admin.trabalho.index',compact('user','trabalhos','orientadores','temas'));
     }
 
     /**
@@ -139,5 +142,20 @@ class TrabalhoController extends Controller
     {
         $user = Auth::user();
         return view('admin.trabalho.pendentes',compact('user'));
+    }
+
+    public function search(Request $req)
+    {
+        $filters = [
+            'titulo' => $req->titulo_trabalho,
+            'orientador_id' => $req->orientador_id,
+            'tema_id' => $req->tema_id
+        ];
+        $trabalhos = Trabalho::search($filters)->paginate(5);
+        $orientadores = User::getOrientadores();
+        $temas = Tema::all();
+        $user = Auth::user();
+
+        return view('admin.trabalho.index',compact('trabalhos','orientadores','temas','user','filters'));
     }
 }

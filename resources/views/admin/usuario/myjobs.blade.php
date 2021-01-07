@@ -16,8 +16,8 @@
                   <tbody>
                     @foreach($trabalhos as $t)
                     <tr>
-                      <td style="font-size: 12px;">{{$t->titulo}}</td>
-                      <td style="font-size: 12px;">{{$t->tema->titulo}}</td>
+                      <td>{{$t->titulo}}</td>
+                      <td>{{$t->tema->titulo}}</td>
                       <td>
                           <div class="row">
                             <form action="{{route('trabalho.show')}}" method="POST">

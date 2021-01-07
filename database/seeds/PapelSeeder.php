@@ -1,6 +1,7 @@
 <?php
 
 use App\Papel;
+use App\User;
 use Illuminate\Database\Seeder;
 
 class PapelSeeder extends Seeder
@@ -30,6 +31,12 @@ class PapelSeeder extends Seeder
         $p4 = Papel::firstOrCreate([
             'nome' => 'Aluno',
             'descricao' => 'Acesso ao sistema como Aluno'
+        ]);
+
+        $user1 = User::firstOrCreate([
+            'name' => 'Admin',
+            'email' => 'admin@helptcc.com',
+            'password' => 'admin',
         ]);
     }
 }

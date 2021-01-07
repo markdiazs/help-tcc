@@ -50,7 +50,7 @@ Route::post('admin/usuario/desblock','Admin\UsuarioController@desblock')->name('
 Route::get('admin/usuario/blacklist','Admin\UsuarioController@blacklist')->name('usuario.blacklist');
 Route::post('admin/usuario/edit','Admin\UsuarioController@edit')->name('usuario.edit');
 Route::post('admin/usuario/update','Admin\UsuarioController@update')->name('usuario.update');
-Route::post('admin/usuario/search','Admin\UsuarioController@searchFilter')->name('usuario.search');
+Route::get('admin/usuario/search','Admin\UsuarioController@searchFilter')->name('usuario.search');
 Route::post('admin/usuario/remove','Admin\UsuarioController@destroy')->name('usuario.delete');
 Route::post('admin/usuario/edit-my-job','Admin\UsuarioController@editMyJob')->name('usuario.editmyjob');
 Route::post('admin/usuario/update-my-job','Admin\UsuarioController@updateMyJob')->name('usuario.updatemyjob');
@@ -66,6 +66,7 @@ Route::post('admin/trabalho/visualizar','Admin\TrabalhoController@show')->name('
 Route::post('admin/trabalho/delete','Admin\TrabalhoController@delete')->name('trabalho.delete');
 Route::post('admin/trabalho/edit','Admin\TrabalhoController@edit')->name('trabalho.edit');
 Route::post('admin/trabalho/update','Admin\TrabalhoController@update')->name('trabalho.update');
+Route::get('admin/trabalho/search','Admin\TrabalhoController@search')->name('trabalho.search');
 
 
 //papel

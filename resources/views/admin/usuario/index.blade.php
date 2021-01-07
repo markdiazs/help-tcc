@@ -70,10 +70,16 @@
                     </div>
                     @endif
                   </tbody>
+                  
                 </table>
+                @if(isset($filters))
+                {!! $users->appends(Request::all())->links() !!}
+                @else 
+                {!! $users->links() !!}
+                @endif
               </div>
               <div class="card-footer">
-              <form action="{{route('usuario.search')}}" method="POST">
+              <form action="{{route('usuario.search')}}" method="GET">
                 {{csrf_field()}}
                         <div class="form-group">
                             <label for="search"><i class="fas fa-filter"></i> Filtrar:</label>

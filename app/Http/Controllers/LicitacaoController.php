@@ -59,7 +59,7 @@ class LicitacaoController extends Controller
             $p = $p;
         }
         if(isset($p)){
-            if($p->nome == 'Professor' || $p->nome == 'Coordenador'){
+            if($p->nome == 'Professor' || $p->nome == 'Coordenador' || $p->nome == 'Admin'){
                 $trabalhos = Trabalho::select('*')->paginate(5);
             }
         }else {

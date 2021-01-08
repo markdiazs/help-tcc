@@ -3,6 +3,7 @@
 use App\Papel;
 use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class PapelSeeder extends Seeder
 {
@@ -32,11 +33,12 @@ class PapelSeeder extends Seeder
             'nome' => 'Aluno',
             'descricao' => 'Acesso ao sistema como Aluno'
         ]);
-
+        $data = ['password' => 'admin'];
         $user1 = User::firstOrCreate([
             'name' => 'Admin',
             'email' => 'admin@helptcc.com',
-            'password' => 'admin',
+            'password' => Hash::make($data['password'])
         ]);
+        
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Anexo;
+use App\Http\Controllers\Admin\UsuarioController;
 use App\Licitacao;
 use Illuminate\Http\Request;
 use App\Modalidade;
@@ -52,7 +53,17 @@ class LicitacaoController extends Controller
         $qtdtrabalhos = Trabalho::all()->count();
         $trabalhosalone = Trabalho::where('orientador_id','=',null)->get()->count();
         $mytrabalhos = Trabalho::where('user_id',$user->id)->orWhere('orientador_id',$user->id)->get()->count();
-        $trabalhos = Trabalho::select('*')->paginate(5);
+        $p = null ;
+        $u = User::find($user->id);
+        foreach($u->papeis as $p){
+            $p = $p;
+        }
+        if($p->nome == 'Professor' || $p->nome == 'Coordenador'){
+            $trabalhos = Trabalho::select('*')->paginate(5);
+        }else {
+            $trabalhos = Trabalho::where('user_id','=',$user->id)->paginate(5);
+        }
+        
         $orientadores = User::getOrientadores();
         $temas = Tema::all();
  

@@ -101,6 +101,8 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column sidebar-menu tree" data-widget="treeview" role="menu" data-accordion="false">
+           
+           @can('usuario-view')
             <li class=" nav-item has-treeview">
                 <a href="#" class="nav-link">
                 <i style="font-weight: bold;" class="fas fa-users"> | </i>
@@ -112,10 +114,14 @@
                 <ul class="nav nav-treeview" style="display: none;">
                   <li class="nav-item"><a style="text-transform: uppercase; font-weight: 500; font-size: 14px;" class="nav-link" href="{{route('usuario.index')}}"><i class="fas fa-search"></i> </i>buscar usuário</a></li>
                   <li class="nav-item"><a style="text-transform: uppercase; font-weight: 500; font-size: 14px;" class="nav-link" href="{{route('usuario.create')}}"><i style="font-weight: bold; margin-right: 7px;" class="fas fa-plus-square"> </i>novo usuário</a></li>
+                 @can('papel-edit')
                   <li class="nav-item"><a style="text-transform: uppercase; font-weight: 500; font-size: 14px;" class="nav-link" href="{{route('papel.index')}}"><i style="font-weight: bold; margin-right: 7px;" class="fas fa-shield-alt"> </i>papéis</a></li>
+                @endcan
                   <li class="nav-item"><a style="text-transform: uppercase; font-weight: 500; font-size: 14px;" class="nav-link" href="{{route('usuario.block')}}"><i style="font-weight: bold; margin-right: 7px;" class="fas fa-lock"></i>Usuários Bloqueados</a></li>
                 </ul>
             </li>
+           @endcan
+           
             <li class=" nav-item has-treeview">
                 <a href="#" class="nav-link">
                 <i style="font-weight: bold;" class="fas fa-thumbtack"> | </i>
@@ -125,7 +131,9 @@
                 </span>
                 </a>
                 <ul class="nav nav-treeview" style="display: none;">
+                  @can('trabalho-search')
                   <li class="nav-item"><a style="text-transform: uppercase; font-weight: 500; font-size: 14px;" class="nav-link" href="{{route('trabalho.index')}}"><i class="fas fa-search"></i> </i>buscar trabalho</a></li>
+                  @endcan
                   <li class="nav-item"><a style="text-transform: uppercase; font-weight: 500; font-size: 14px;" class="nav-link" href="{{route('trabalho.create')}}"><i style="font-weight: bold; margin-right: 7px;" class="fas fa-plus-square"> </i>novo trabalho</a></li>
                   <li class="nav-item"><a style="text-transform: uppercase; font-weight: 500; font-size: 14px;" class="nav-link" href="{{route('usuario.myjobs')}}"><i style="font-weight: bold; margin-right: 7px;" class="fas fa-tasks"></i>Meus trabalhos</a></li>
                   

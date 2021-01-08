@@ -64,5 +64,17 @@ class PermissaoSeeder extends Seeder
             'nome' =>'trabalho-delete',
             'descricao' =>'Deletar trabalho'
         ]);
+
+        $trabalho5 = Permissao::firstOrCreate([
+            'nome' => 'trabalho-search',
+            'descricao' => 'Permite realizar busca na tabela de trabalho'
+        ]);
+
+        $papel1 = Permissao::firstOrCreate([
+            'nome' => 'papel-edit',
+            'descricao' => 'Editar papeis'
+        ]);
+
+        
     }
 }

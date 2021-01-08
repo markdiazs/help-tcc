@@ -30,12 +30,14 @@
                       <td>{{$u->whatsapp}}</td>
                       <td>
                           <div class="row">
+                          @can('usuario-edit')
                           <form action="{{route('usuario.edit')}}" method="POST">
                             {{csrf_field()}}
                             <input type="hidden" value="{{$u->id}}" name="user_id">
                           <button type="submit" style="margin: 0 10px;"  class="btn-sm btn btn-button btn-default" title="Editar usuário"><i class="fas fa-edit"></i></button>
                           </form>
-                       
+                          @endcan
+                          @can('usuario-block')
                           @if($u->status == 1)
                           <form action="{{route('usuario.blocked')}}" method="POST">
                           {{ csrf_field() }}
@@ -50,12 +52,15 @@
                           <button style="margin: 0 10px;" type="submit" class="btn-sm btn btn-button btn-default" title="Desbloquear usuário"><i class="fas fa-lock-open"></i></button>
                           </form>
                           @endif
+                          @endcan
+                          @can('usuario-delete')
                           <form action="{{route('usuario.delete')}}" method="POST">
                             {{ csrf_field()}}
                             <input type="hidden" value="{{$u->id}}" name="user_id">
                             <button style="margin: 0 10px;" type="submit" class="btn-sm btn btn-button btn-danger" title="Excluir usuário"><i class="fas fa-trash"></i></button>
 
                           </form>
+                          @endcan
                      
                           </div>
                           

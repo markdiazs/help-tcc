@@ -61,9 +61,9 @@ class LicitacaoController extends Controller
         if(isset($p)){
             if($p->nome == 'Professor' || $p->nome == 'Coordenador'){
                 $trabalhos = Trabalho::select('*')->paginate(5);
-            }else {
-                $trabalhos = Trabalho::where('user_id','=',$user->id)->paginate(5);
             }
+        }else {
+            $trabalhos = Trabalho::where('user_id','=',$user->id)->paginate(5);
         }
         
         $orientadores = User::getOrientadores();

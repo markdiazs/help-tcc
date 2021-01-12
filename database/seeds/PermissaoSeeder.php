@@ -45,6 +45,10 @@ class PermissaoSeeder extends Seeder
             'nome' => 'edit-myjob',
             'descricao' => 'editar o próprio trabalho'
         ]);
+        $usuario7 = Permissao::firstOrCreate([
+            'nome' => 'unblock-user',
+            'descricao' => 'este usuário não pode ser bloqueado'
+        ]);
         
 
         //trabalhos

@@ -55,7 +55,7 @@
                     <div class="form-group">
                         <label for="theme-description">Descrição do trabalho:</label>
                         <textarea name="descricao" class="textarea form-control" rows="5" cols="400" placeholder="Descreva o seu projeto...">{{$trabalho->descricao}}</textarea>
-                        
+                        <script> CKEDITOR.replace( 'descricao', {width: 1230 }); </script>
                     </div>
                 </div>
                 <div class="row">

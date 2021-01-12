@@ -35,9 +35,18 @@ class TrabalhoController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $temas = Tema::all();
-        $professores = User::getOrientadores();
-        return view('admin.trabalho.create',compact('user','temas','professores'));
+        if($user->status == 0){
+            return view('admin.usuario.blocklist',compact('user'));
+        }else{
+
+
+            $temas = Tema::all();
+            $professores = User::getOrientadores();
+            return view('admin.trabalho.create',compact('user','temas','professores'));
+
+        }
+
+
     }
 
     /**
@@ -46,6 +55,9 @@ class TrabalhoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    
+
     public static function store(Request $req)
     {
         $user = Auth::user();

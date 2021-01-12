@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
   @toastr_css
 
   <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -44,7 +45,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          <img src="{{asset('dist/img/user2-160x160.png')}}" class="user-image img-circle elevation-2" alt="User Image">
+          <!--<img src="{{asset('dist/img/user2-160x160.png')}}" class="user-image img-circle elevation-2" alt="User Image"> -->
           <span class="d-none d-md-inline">{{$user->name}}</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">

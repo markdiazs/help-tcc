@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 
 class TemaController extends Controller
 {
+
+    
     public function store(Request $req)
     {
         $temas = Tema::all();

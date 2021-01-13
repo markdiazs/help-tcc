@@ -113,7 +113,10 @@ class UsuarioController extends Controller
      */
     public function show(Request $req)
     {
-
+        $data = $req->all();
+        $user = User::find($data['user_id']);
+        $trabalhos = Trabalho::where('user_id','=',$user->id)->orWhere('orientador_id','=',$user->id)->get()->count();
+        return view('admin.usuario.show',compact('user','trabalhos'));
     }
 
     /**

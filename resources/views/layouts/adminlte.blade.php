@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
   @toastr_css
 
@@ -35,14 +36,28 @@
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
-  <!--  <ul class="navbar-nav">
+    <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a style="color: #D64A65; font-weight: bold;" class="nav-link"  href="#" role="button">Chat <i style="font-size: 23px;" class="far fa-comment-alt"></i></a>
       </li>
-    </ul> -->
+    </ul>
     
 
     <ul class="navbar-nav ml-auto">
+    <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+          <i class="far fa-bell"></i>
+          <span class="badge badge-warning navbar-badge">15</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+          <i class="fas fa-flag"></i> Prof° Admin é o seu novo orientador
+            <span class="float-right text-muted text-sm">12 hours</span>
+          </a>
+          <div class="dropdown-divider"></div>
+      </li>
       <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
           <!--<img src="{{asset('dist/img/user2-160x160.png')}}" class="user-image img-circle elevation-2" alt="User Image"> -->
@@ -50,7 +65,7 @@
         </a>
         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
           <!-- User image -->
-          <li class="user-header bg-primary">
+          <li style="background-color: #D64A65 !important;" class="user-header bg-primary">
             <img src="{{asset('dist/img/user2-160x160.png')}}" class="img-circle elevation-2" alt="User Image">
 
             <p>
@@ -59,21 +74,23 @@
             </p>
           </li>
           <!-- Menu Body -->
-          <li class="user-body">
+          <li  class="user-body">
             <div class="row">
               <!-- <div class="col-6 text-center">
                 <a href="#">editar perfil</a>
               </div> -->
               <div class="col-12 text-justify">
-                <a style="float: right;" href="{{ route('logout') }}"
+                <a class="btn btn-default btn-sm" style="float: right;" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
                 sair
               </a>
-              <a href="#" style="float: left;">
-                perfil
+              <form action="{{route('usuario.perfil')}}" method="POST">
+                {{csrf_field()}}
+                <input type="hidden" name="user_id" value="{{$user->id}}"/>
+                <button class="btn btn-default btn-sm" type="submit" style="float: left; border: none;">Perfil</button>
               </a>
-
+              </form>  
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                  @csrf
@@ -83,12 +100,14 @@
             <!-- /.row -->
           </li>
     </ul>
-
+    <li class="nav-item d-none d-sm-inline-block">
+    <a href="#" class="nav-link"><i class="fas fa-info-circle"></i> Ajuda</a>
+          </li>
   </nav>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside style="background-color: #434B66;" class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
       <img src="{{asset('dist/img/help_logo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">

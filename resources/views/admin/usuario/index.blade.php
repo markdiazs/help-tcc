@@ -57,7 +57,7 @@
                           <form action="{{route('usuario.delete')}}" method="POST">
                             {{ csrf_field()}}
                             <input type="hidden" value="{{$u->id}}" name="user_id">
-                            <button style="margin: 0 10px;" type="submit" class="btn-sm btn btn-button btn-danger" title="Excluir usuário"><i class="fas fa-trash"></i></button>
+                            <button style="margin: 0 10px;" type="submit" class="btn-sm btn btn-button btn-default" title="Excluir usuário"><i class="fas fa-trash"></i></button>
 
                           </form>
                           @endcan

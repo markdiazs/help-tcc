@@ -33,7 +33,7 @@
                           <form action="{{route('trabalho.delete')}}" method="POST">
                             {{ csrf_field()}}
                             <input type="hidden" value="{{$t->id}}" name="trabalho_id">
-                            <button style="margin: 0 10px;" type="submit" class="btn-sm btn btn-button btn-danger" title="Excluir trabalho"><i class="fas fa-trash"></i></button>
+                            <button style="margin: 0 10px;" type="submit" class="btn-sm btn btn-button btn-default" title="Excluir trabalho"><i class="fas fa-trash"></i></button>
                           </form>
                           </div>
                       </td>

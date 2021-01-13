@@ -44,12 +44,14 @@
                           <button style="margin: 0 10px;" type="submit" class="btn-sm btn btn-button btn-default" title="Editar trabalho"><i class="fas fa-edit"></i></button>
                           </form>
                           @if(!isset($t->orientador))
+                          @can('usuario-orientar')
                           <form action="{{route('usuario.orientar')}}" method="POST">
                           {{csrf_field()}}
                           <input type="hidden" value="{{$t->id}}" name="trabalho_id">
                           <input type="hidden" value="{{$t->user->id}}" name="autor_id">
                           <button type="submit" style="margin: 0 10px;" class="btn-sm btn btn-button btn-default" title="Orientar"><i class="fas fa-chalkboard-teacher"></i></button>
                           </form>
+                          @endcan
                           @endif
                           <form action="{{route('trabalho.delete')}}" method="POST">
                             {{ csrf_field()}}

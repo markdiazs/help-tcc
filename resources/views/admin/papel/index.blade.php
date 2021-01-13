@@ -9,7 +9,7 @@
                 <div class="row" style="width: 100%;">
                 @foreach($papeis as $p)
                 <div class="col-md-4">
-                        <div class="info-box bg-info">
+                        <div style="background-color: #D64A65 !important;" class="info-box bg-info">
                         <span class="info-box-icon"><i class="fas fa-user"></i></span>
 
                         <div class="info-box-content">

@@ -3,7 +3,7 @@
 @section('body')
 <div class="card card-info" style="width: 80%; margin: 0 auto;">
               <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-cogs"></i></h3>
+                <h3 class="card-title"><i class="fas fa-id-card-alt"></i></h3>
               </div>
               <div class="card-body table-responsive p-0">
               <div class="card-body box-profile">
@@ -13,7 +13,7 @@
 
                 <h3 class="profile-username text-center">{{$user->name}}</h3>
 
-                <p class="text-muted text-center">{{$user->papeis()->first()->nome}}</p>
+                <p class="text-muted text-center">{{$user->papeis()->first()->nome}}(a)</p>
 
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
@@ -27,61 +27,15 @@
                   </li>
                 </ul>
 
-                <a data-toggle="modal" data-target="#modal-default" href="#" class="btn btn-default btn-block"><i class="fas fa-wrench"></i><b>Alterar Informações</b></a>
+                <a  class="btn btn-default" href="{{route('usuario.editmyperfil')}}"  name="btn_alter_info" id="btn_alter_info"><i class="fas fa-wrench"></i><b>Alterar Informações</b></a>
+                <a href="/" class="btn btn-default"><i class="fas fa-chevron-left"></i><b>Voltar</b></a>
               </div>
               </div>
               <div class="card-footer">
+                <div id="form_alter" class="d-none">
+                  <h1>Testando!</h1>
+                </div>
               </div>
               <!-- /.card-body -->
             </div>
-
-            <div class="modal fade " id="modal-default">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h6 class="modal-title"><i class="fas fa-wrench"></i>Alterar Informaçõoes</h6>
-            </div>
-            <div class="modal-body">
-              <form action="{{route('tema.store')}}" method="POST">
-              {{csrf_field()}}
-                <div class="row">
-                    <div class="form-group" style="width: 100%;">
-                    <label for="">E-mail: </label>
-                        <input class="form-control form-control-sm" type="text" name="tema_title" id="theme-title" placeholder="título">
-                    </div>
-                    <div class="form-group" style="width: 100%;">
-                    <label for="">Whatsapp: </label>
-                        <input class="form-control form-control-sm" type="text" name="tema_title" id="theme-title" placeholder="título">
-                    </div>
-                    <div class="form-group" style="width: 100%;">
-                      <label for="">Senha Atual:</label>
-                        <input class="form-control form-control-sm" type="password" name="old_password" id="theme-title" placeholder="título">
-                    </div>
-                    <div class="form-group" style="width: 100%;">
-                      <label for="">Nova Senha:</label>
-                        <input class="form-control form-control-sm" type="password" name="new_password" id="theme-title" placeholder="título">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-2">
-                        <button type="submit" class="btn btn-sm btn-default">Salvar</button>
-                    </div>
-                    <div class="col-2">
-                        <button data-dismiss="modal"  class="btn btn-default btn-sm">Voltar</button>
-                    </div>
-
-                </div>
-                <div class="row">
-                  <div class="alert alert-warning alert-dismissible" style="background-color: transparent; border: none;">
-                    <h6><i class="icon fas fa-exclamation-triangle"></i>Atenção!</h6>
-                    <p>prencha apenas os campos no qual você quer alterar.</p>
-                  </div>
-              </div>
-              </form>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\SendmailCreateUser;
 use App\Mail\SendmailTeacherProject;
+use App\Mail\SendmailUpdateUser;
 use App\Papel;
 use App\Tema;
 use App\Trabalho;
@@ -113,8 +114,7 @@ class UsuarioController extends Controller
      */
     public function show(Request $req)
     {
-        $data = $req->all();
-        $user = User::find($data['user_id']);
+        $user = Auth::user();
         $trabalhos = Trabalho::where('user_id','=',$user->id)->orWhere('orientador_id','=',$user->id)->get()->count();
         return view('admin.usuario.show',compact('user','trabalhos'));
     }
@@ -166,6 +166,58 @@ class UsuarioController extends Controller
         toastr()->success('Usuário editado com sucesso');
         return redirect()->route('usuario.index');
         
+    }
+
+    public function editmyperfil()
+    {
+        $user = User::find(Auth::user()->id);
+
+        return view('admin.usuario.update',compact('user'));
+    }
+
+    public function updateMyPerfil(Request $req)
+    {
+
+        $this->validate($req,[
+            'user_password' => 'required'
+        ]);
+
+        $user = User::find(Auth::user()->id);
+        $count = 0;
+
+           if(!Hash::check($req->user_password,Auth::user()->password)){
+                Toastr::error('A senha digitada está incorreta');
+                return redirect()->route('usuario.editmyperfil');
+           } 
+
+        if($req->new_password != null || $req->confirm_password !=null){
+            if($req->new_password != $req->confirm_password){
+                Toastr::error('senhas não conferem');
+                return redirect()->route('usuario.editmyperfil');
+            }
+        }
+
+        $data = [
+            'name' => $req->user_name,
+            'email' => $req->user_email,
+            'whatsapp' => $req->user_whatsapp,
+            'password' => Hash::make($req->new_password)
+        ];
+
+        foreach($data as $key => $value){
+            if($value != null){
+                $user->update([$key => $value]);
+                $count++;
+            }
+        }
+
+        if($count > 0){
+            Mail::to($data['email'])->cc('contatohelptcc@gmail.com')->send(new SendmailUpdateUser($user));
+            Toastr::success('Informações atualizadas');
+            return redirect()->route('usuario.perfil');
+        }
+        Toastr::error('Houve algum erro ao atualizar o seu perfil');
+        return redirect()->route('usuario.editmyperfil');   
     }
 
     public function editMyJob(Request $req)

@@ -55,7 +55,9 @@ Route::post('admin/usuario/remove','Admin\UsuarioController@destroy')->name('usu
 Route::post('admin/usuario/edit-my-job','Admin\UsuarioController@editMyJob')->name('usuario.editmyjob');
 Route::post('admin/usuario/update-my-job','Admin\UsuarioController@updateMyJob')->name('usuario.updatemyjob');
 Route::post('admin/usuario/orientar-projeto','Admin\UsuarioController@orientarProject')->name('usuario.orientar');
-Route::post('admin/usuario/perfil','Admin\UsuarioController@show')->name('usuario.perfil');
+Route::get('admin/usuario/perfil','Admin\UsuarioController@show')->name('usuario.perfil');
+Route::get('admin/usuario/perfil/edit','Admin\UsuarioController@editmyperfil')->name('usuario.editmyperfil');
+Route::post('admin/usuario/perfil/update','Admin\UsuarioController@updateMyPerfil')->name('usuario.updatemyperfil');
 
 //trabalho
 Route::get('admin/trabalho/create','Admin\TrabalhoController@create')->name('trabalho.create');

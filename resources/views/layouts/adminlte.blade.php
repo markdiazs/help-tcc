@@ -21,6 +21,7 @@
   <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.map"></script>
 </head>
 <!--
 `body` tag options:
@@ -85,7 +86,7 @@
                 document.getElementById('logout-form').submit();">
                 sair
               </a>
-              <form action="{{route('usuario.perfil')}}" method="POST">
+              <form action="{{route('usuario.perfil')}}" method="GET">
                 {{csrf_field()}}
                 <input type="hidden" name="user_id" value="{{$user->id}}"/>
                 <button class="btn btn-default btn-sm" type="submit" style="float: left; border: none;">Perfil</button>

@@ -314,7 +314,9 @@ class UsuarioController extends Controller
 
         if($trabalho->update(['orientador_id' => $orientador->id])){
             Mail::to($autor->email)->cc('contatohelptcc@gmail.com')->send(new SendmailTeacherProject($orientador));
+            $autor->notifyStudentAboutLead($orientador);
         }
+        
         Toastr::success('O projeto foi adicionado a sua lista');
         return redirect()->back();
 

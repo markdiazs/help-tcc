@@ -71,7 +71,7 @@
               <div class="row">
                 <div class="form-group">
                     <button type="submit" class="btn btn-default btn-sm">Salvar</button>
-                    <a href="#" class="btn btn-default btn-sm">Voltar</a>
+                    <a href="{{route('usuario.perfil')}}" class="btn btn-default btn-sm">Voltar</a>
                 </div>
               </div>
               </form>

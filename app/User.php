@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\leaderForStudent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -136,5 +137,12 @@ class User extends Authenticatable
         if($trabalho != null){
             $this->trabalhos()->attach($trabalho);
         }
+    }
+
+
+    //notificando user
+    public function notifyStudentAboutLead( User $lead)
+    {
+        return $this->notify(new leaderForStudent($lead));
     }
 }

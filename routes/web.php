@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\ControladorCategoria;
 use App\Http\Controllers\LicitacaoController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/','LicitacaoController@dashboard');
@@ -58,6 +59,9 @@ Route::post('admin/usuario/orientar-projeto','Admin\UsuarioController@orientarPr
 Route::get('admin/usuario/perfil','Admin\UsuarioController@show')->name('usuario.perfil');
 Route::get('admin/usuario/perfil/edit','Admin\UsuarioController@editmyperfil')->name('usuario.editmyperfil');
 Route::post('admin/usuario/perfil/update','Admin\UsuarioController@updateMyPerfil')->name('usuario.updatemyperfil');
+Route::get('admin/usuario/notificacoes', function(){
+    return Auth::user()->notifications;
+});
 
 //trabalho
 Route::get('admin/trabalho/create','Admin\TrabalhoController@create')->name('trabalho.create');

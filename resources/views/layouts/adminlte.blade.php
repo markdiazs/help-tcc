@@ -46,18 +46,20 @@
 
     <ul class="navbar-nav ml-auto">
     <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false" id="btn_notify">
           <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+          <span class="badge badge-warning navbar-badge">{{count($user->notifications)}}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <span class="dropdown-item dropdown-header">{{count($user->unreadNotifications)}} Notificações</span>
+          @foreach($user->unreadNotifications as $not)
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-          <i class="fas fa-flag"></i> Prof° Admin é o seu novo orientador
-            <span class="float-right text-muted text-sm">12 hours</span>
+          <a style="font-size: 12px;font-weight: bold;" href="#" class="dropdown-item">
+          <i class="fas fa-flag"></i>{{$not->data['message']}}
+            <span class="float-right text-muted text-sm">{{$not->created_at->locale('pt')->diffForHumans()}}</span>
           </a>
           <div class="dropdown-divider"></div>
+          @endforeach
       </li>
       <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -238,6 +240,7 @@
 <script src="{{ asset('dist/js/pages/dashboard3.js') }}"></script>
 
 <script>
+
   $(function () {
     /* ChartJS
      * -------
@@ -395,31 +398,6 @@
       options: barChartOptions
     })
 
-    //---------------------
-    //- STACKED BAR CHART -
-    //---------------------
-  //   var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
-  //   var stackedBarChartData = jQuery.extend(true, {}, barChartData)
-
-  //   var stackedBarChartOptions = {
-  //     responsive              : true,
-  //     maintainAspectRatio     : false,
-  //     scales: {
-  //       xAxes: [{
-  //         stacked: true,
-  //       }],
-  //       yAxes: [{
-  //         stacked: true
-  //       }]
-  //     }
-  //   }
-
-  //   var stackedBarChart = new Chart(stackedBarChartCanvas, {
-  //     type: 'bar', 
-  //     data: stackedBarChartData,
-  //     options: stackedBarChartOptions
-  //   })
-  // })
 </script>
   @jquery
   @toastr_js

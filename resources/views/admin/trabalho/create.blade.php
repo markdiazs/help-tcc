@@ -100,7 +100,7 @@
               <h6 class="modal-title"><i class="fas fa-plus"></i> Cadastrar Tema</h6>
             </div>
             <div class="modal-body">
-              <form action="{{route('tema.store')}}" method="POST">
+              <form id="cadtheme" action="{{route('tema.store')}}" method="POST">
               {{csrf_field()}}
                 <div class="row">
                     <div class="form-group" style="width: 100%;">
@@ -109,10 +109,10 @@
                 </div>
                 <div class="row">
                     <div class="col-2">
-                        <button type="submit" class="btn btn-sm btn-default">Salvar</button>
+                        <button id="savethemebtn" type="submit" class="btn btn-sm btn-default">Salvar</button>
                     </div>
                     <div class="col-2">
-                        <button data-dismiss="modal"  class="btn btn-default btn-sm">Voltar</button>
+                        <button id="closemodal" data-dismiss="modal"  class="btn btn-default btn-sm">Voltar</button>
                     </div>
                 </div>
               </form>
@@ -122,4 +122,20 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
+
+      <script>
+      $("#cadtheme").submit(function(event){
+        event.preventDefault();
+
+        $.ajax({
+          url: "{{route('tema.store')}}",
+          type: "POST",
+          data: $("#cadtheme").serialize(),
+          success: function(result){
+            $("#closemodal").trigger('click');
+            $("#tema_id").prepend("<option selected value="+ result[0] +">"+ result[1] + "</option>")
+          }
+        });
+      });
+      </script>
 @endsection

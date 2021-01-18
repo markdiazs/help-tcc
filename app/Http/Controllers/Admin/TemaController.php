@@ -24,13 +24,15 @@ class TemaController extends Controller
         if( $count > 0){
 
             Toastr::error('Tema Duplicado');
-            return redirect()->back();
+            return json_encode(0);
         }else{
+            
             $tema = Tema::create([
                 'titulo' => $req->tema_title
             ]);
+            // $tema = Tema::find(1);
             Toastr::success('Tema cadastrado');
-            return redirect()->back()->with('tema',$tema);
+            return([$tema->id, $tema->titulo]);
         }
 
 

@@ -86,6 +86,9 @@ Route::post('admin/papel/permissao/remove','Admin\PapelController@permissaoDestr
 //tema
 Route::post('admin/tema/new','Admin\TemaController@store')->name('tema.store');
 
+//notifications
+Route::get('admin/notify/readall','Admin\NotifyController@readAll')->name('notify.readall');
+
 
 });
 

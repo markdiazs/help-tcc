@@ -35,6 +35,19 @@ class TrabalhoController extends Controller
     public function create()
     {
         $user = Auth::user();
+        $count = 0;
+        $alunos = null;
+        foreach($user->papeis as $p){
+            if($p->nome == "Professor" || $p->nome == "Coordenador" || $p->nome == "Admin"){
+                $count++;
+                $alunos = User::whereHas('papeis', function($query){
+                    $query->where('nome','=','Aluno');
+                })->get();
+            }
+        }
+
+
+
         if($user->status == 0){
             return view('admin.usuario.blocklist',compact('user'));
         }else{
@@ -42,7 +55,7 @@ class TrabalhoController extends Controller
 
             $temas = Tema::all();
             $professores = User::getOrientadores();
-            return view('admin.trabalho.create',compact('user','temas','professores'));
+            return view('admin.trabalho.create',compact('user','temas','professores','alunos'));
 
         }
 
@@ -61,13 +74,25 @@ class TrabalhoController extends Controller
     public static function store(Request $req)
     {
         $user = Auth::user();
-        $data = [
-            'titulo' => $req->titulo,
-            'descricao' => $req->descricao,
-            'user_id' => $user->id,
-            'orientador_id' => $req->orientador_id,
-            'tema_id' => $req->tema_id
-        ];
+        $data = [];
+        
+        if($req->aluno_id != null){
+            $data = [
+                'titulo' => $req->titulo,
+                'descricao' => $req->descricao,
+                'user_id' => $req->aluno_id,
+                'orientador_id' => $req->orientador_id,
+                'tema_id' => $req->tema_id
+            ];
+        }else{
+            $data = [
+                'titulo' => $req->titulo,
+                'descricao' => $req->descricao,
+                'user_id' => $user->id,
+                'orientador_id' => $req->orientador_id,
+                'tema_id' => $req->tema_id
+            ];
+        }
 
         $trabalho = Trabalho::create($data);
         Toastr::success('trabalho criado com sucesso');
@@ -137,9 +162,25 @@ class TrabalhoController extends Controller
      */
     public function delete(Request $req)
     {
+        $user = User::find(Auth::user()->id);
+        $count = 0;
+        foreach($user->papeis as $p){
+            if($p->nome == "Professor" || $p->nome == "Coordenador" || $p->nome = "Admin" && url()->current() == route('usuario.myjobs')){
+                $count++;
+            }
+        }
+
+
         $trabalho = Trabalho::find($req->trabalho_id);
-        $trabalho->delete();
-        Toastr::success('Trabalho excluido com sucesso');
+
+        if($count <= 0){
+            $trabalho->delete();
+            Toastr::success('Trabalho excluido com sucesso');
+        }else{
+            $trabalho->update(['orientador_id' => null]);
+            Toastr::success('Você deixou de orientar esse projeto');
+        }
+
         return redirect()->back();
     }
 

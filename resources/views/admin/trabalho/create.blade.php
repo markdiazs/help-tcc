@@ -49,6 +49,19 @@
                       </select>
                     </div>
                   </div>
+                  @if(isset($alunos))
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label for="user_name">Aluno:</label>
+                      <select class="form-control form-control-sm" name="orientador_id" id="aluno_id">
+                        <option selected value=""></option>
+                        @foreach($alunos as $a)  
+                        <option value="{{$a->id}}">{{$a->name}} | {{$a->turma}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                  @endif
                 </div>
                 <div class="row">
                     <div class="form-group">

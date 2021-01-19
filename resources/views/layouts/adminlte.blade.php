@@ -73,7 +73,7 @@
 
             <p>
               {{$user->name}}
-              <small>Member since {{$user->created_at}}</small>
+              <small>Membro desde {{$user->created_at->locale('pt')->isoFormat('MMMM Do YYYY')}}</small>
             </p>
           </li>
           <!-- Menu Body -->

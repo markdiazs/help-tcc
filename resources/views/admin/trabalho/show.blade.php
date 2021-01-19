@@ -13,9 +13,6 @@
               </div>
               <div class="card-footer">
               <div class="row">
-                @can('usuario-orientar')
-                  <a style="margin-right: 10px;" href="#" class="btn btn-sm btn-default"><i class="fas fa-chalkboard-teacher"></i> Orientar</a>
-                @endcan
                   <a href="{{URL::previous()}}" class="btn btn-sm btn-default"><i class="fas fa-chevron-left"></i> Voltar</a>
               </div>
               </div>

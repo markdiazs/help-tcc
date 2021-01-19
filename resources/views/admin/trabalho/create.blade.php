@@ -53,7 +53,7 @@
                   <div class="col-4">
                     <div class="form-group">
                       <label for="user_name">Aluno:</label>
-                      <select class="form-control form-control-sm" name="orientador_id" id="aluno_id">
+                      <select class="form-control form-control-sm" name="aluno_id" id="aluno_id">
                         <option selected value=""></option>
                         @foreach($alunos as $a)  
                         <option value="{{$a->id}}">{{$a->name}} | {{$a->turma}}</option>
@@ -126,6 +126,10 @@
       <script>
       $("#cadtheme").submit(function(event){
         event.preventDefault();
+        if (e.keyCode == 13) {               
+          e.preventDefault();
+          return false;
+         }
 
         $.ajax({
           url: "{{route('tema.store')}}",

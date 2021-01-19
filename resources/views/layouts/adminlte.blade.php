@@ -39,7 +39,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a style="color: #D64A65; font-weight: bold;" class="nav-link"  href="#" role="button">Chat <i style="font-size: 23px;" class="far fa-comment-alt"></i></a>
+        <a style="color: #D64A65; font-weight: bold;" class="nav-link"  href="#" role="button">Chat <i style="font-size: 23px;" class="far fa-comment-alt"></i><span class="right badge badge-danger">Em breve</span></a>
       </li>
     </ul>
     

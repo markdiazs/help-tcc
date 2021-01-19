@@ -89,10 +89,10 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-color: #434B66">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Help</b>TCC</a>
+    <a style="color: #D64A65 !important;" href="../../index2.html"><b>Help</b>TCC</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -130,7 +130,7 @@
         <div class="row">
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+            <button style="background-color: #D64A65 !important;border: none;" type="submit" class="btn btn-primary btn-block">Entrar</button>
           </div>
           <!-- /.col -->
         </div>
@@ -141,9 +141,6 @@
       @if (Route::has('password.request'))
         <a  href="{{ route('password.request') }}">Esqueceu sua senha ?</a>
       @endif
-      </p>
-      <p class="mb-0">
-        <a href="/register" class="text-center">Criar uma conta</a>
       </p>
     </div>
     <!-- /.login-card-body -->

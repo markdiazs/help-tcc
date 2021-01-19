@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Yoeunes\Toastr\Facades\Toastr;
 
@@ -51,8 +52,22 @@ class UsuarioController extends Controller
     public function create()
     {
         $user = Auth::user();
+        $user_model = User::find($user->id);
         $papeis = Papel::all();
-        return view('admin.usuario.create',compact('user','papeis'));
+        $count = 0;
+        $admin = false;
+        foreach($user_model->papeis as $p){
+            if($p->nome == 'Admin'){
+                $admin = true;
+            }
+        }
+
+        if(!$admin){
+            $papeis = Papel::where('nome','<>','Admin')->get();
+        }
+
+
+        return view('admin.usuario.create',compact('user','papeis','admin'));
     }
 
     /**
@@ -63,6 +78,24 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
+        
+
+        $rules = [
+            'user_name' => 'required|min:10',
+            'user_email' => 'required'
+        ];
+
+        $validator = Validator::make($request->all(),$rules, $messages = [
+            'required' => 'O campo é obrigatório',
+            'min' => 'O campo precisa conter pelo menos 10 caracteres'
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+    
+        
+        
         $password = Str::random(8);
         $data = [
             'name' => $request['user_name'],
@@ -128,8 +161,22 @@ class UsuarioController extends Controller
     public function edit(Request $req)
     {
         $user = Auth::user();
+        $user_model = User::find($user->id);
         $papeis = Papel::all();
         $user_edit = User::find($req['user_id']);
+
+        $count = 0;
+        $admin = false;
+        foreach($user_model->papeis as $p){
+            if($p->nome == 'Admin'){
+                $admin = true;
+            }
+        }
+
+        if(!$admin){
+            $papeis = Papel::where('nome','<>','Admin')->get();
+        }
+
         return view('admin.usuario.edit',compact('user','papeis','user_edit'));
     }
 

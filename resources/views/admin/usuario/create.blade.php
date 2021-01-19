@@ -11,13 +11,19 @@
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">
-                      <label for="user_name">Nome Completo:</label>
-                      <input class="form-control form-control-sm" type="text" id="user_name" name="user_name" placeholder="nome completo">
+                      <label for="user_name">* Nome Completo:</label>
+                      @error('user_name')
+                          <div style="color: red; font-size: 10px;" class="error">{{ $message }}</div>
+                      @enderror
+                      <input class="form-control form-control-sm" type="text" id="user_name" name="user_name" placeholder="nome completo" value="{{ Request::old('user_name') }}">
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
-                      <label for="user_email">E-mail:</label>
+                      <label for="user_email">* E-mail:</label>
+                      @error('user_email')
+                          <div style="color: red;font-size: 10px;" class="error">{{ $message }}</div>
+                      @enderror
                       <input class="form-control form-control-sm" type="email" id="user_email" name="user_email" placeholder="email para contato">
                     </div>
                   </div>
@@ -28,7 +34,11 @@
                       <label for="user_name">Tipo de perfil:</label>
                       <select class="form-control form-control-sm" name="user_papel" id="user_papel" name="user_papel">
                         @foreach($papeis as $p)
+                        @if(Request::old('user_papel')  == $p->id)
+                          <option selected value="{{$p->id}}">{{$p->nome}}</option>
+                        @else
                           <option value="{{$p->id}}">{{$p->nome}}</option>
+                        @endif
                         @endforeach
                       </select>
                     </div>
@@ -36,19 +46,19 @@
                   <div class="col-3">
                     <div class="form-group">
                       <label for="user_email">Código:</label>
-                      <input class="form-control form-control-sm" type="text" id="user_codigo" name="user_codigo" placeholder="Matricula/Código">
+                      <input class="form-control form-control-sm" type="text" id="user_codigo" name="user_codigo" placeholder="Matricula/Código" value="{{ Request::old('user_codigo') }}">
                     </div>
                   </div>
                   <div class="col-3">
                     <div class="form-group">
                       <label for="user_email">Turma:</label>
-                      <input class="form-control form-control-sm" type="text" id="user_turma" name="user_turma" placeholder="Turma">
+                      <input class="form-control form-control-sm" type="text" id="user_turma" name="user_turma" placeholder="Turma" value="{{ Request::old('user_turma') }}" >
                     </div>
                   </div>
                   <div class="col-3">
                     <div class="form-group">
                       <label for="user_whatssap">whatsapp:</label>
-                      <input class="form-control form-control-sm" type="text" id="user_whatsapp" name="user_whatsapp" id="user_whatsapp" placeholder="whatsapp para contato">
+                      <input class="form-control form-control-sm" type="text" id="user_whatsapp" name="user_whatsapp" id="user_whatsapp" placeholder="whatsapp para contato" value="{{ Request::old('user_whatsapp') }}">
                     </div>
                   </div>
                 </div>

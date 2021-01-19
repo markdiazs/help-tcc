@@ -35,6 +35,9 @@ Route::post('/licitacao/delete/{id}','LicitacaoController@delete');
 
 // projeto tcc
 
+Route::get('/register',function(){
+    return redirect('/login');
+});
 
 Route::group(['middleware' => 'auth'], function(){
 
@@ -97,6 +100,8 @@ Route::get('admin/notify/readall','Admin\NotifyController@readAll')->name('notif
 
 // Route::get('/','LicitacaoController@index');
 
-Auth::routes();
+Auth::routes([
+    'register' => false,
+]);
 
 Route::get('/home', 'LicitacaoController@dashboard')->name('home');

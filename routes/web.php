@@ -74,7 +74,7 @@ Route::get('admin/trabalho/trabalhos-pendentes','Admin\TrabalhoController@trabal
 Route::post('admin/trabalho/store','Admin\TrabalhoController@store')->name('trabalho.store');
 Route::post('admin/trabalho/visualizar','Admin\TrabalhoController@show')->name('trabalho.show');
 Route::post('admin/trabalho/delete','Admin\TrabalhoController@delete')->name('trabalho.delete');
-Route::post('admin/trabalho/edit','Admin\TrabalhoController@edit')->name('trabalho.edit');
+Route::get('admin/trabalho/edit/{id}','Admin\TrabalhoController@edit')->name('trabalho.edit');
 Route::post('admin/trabalho/update','Admin\TrabalhoController@update')->name('trabalho.update');
 Route::get('admin/trabalho/search','Admin\TrabalhoController@search')->name('trabalho.search');
 

@@ -11,17 +11,23 @@
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">
-                      <label for="user_name">Título:</label>
-                      <input class="form-control form-control-sm" type="text" id="titulo" name="titulo" placeholder="">
+                      <label for="user_name">*Título:</label>
+                      @error('titulo')
+                          <div style="color: red; font-size: 10px;" class="error">{{ $message }}</div>
+                      @enderror
+                      <input class="form-control form-control-sm" type="text" id="titulo" name="titulo" placeholder="" value="{{ Request::old('titulo') }}">
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="row">
                     <div class="form-group col-md-8">
-                      <label for="user_email">Tema:</label>
+                      <label for="user_email">*Tema:</label>
+                      @error('tema_id')
+                          <div style="color: red; font-size: 10px;" class="error">{{ $message }}</div>
+                      @enderror
                       <select class="form-control form-control-sm" name="tema_id" id="tema_id">
                         @foreach($temas as $t)
-                        @if(isset($tema))
+                        @if(isset($tema) || Request::old('tema_id') == $t->id)
                         <option selected value="{{$t->id}}">{{$t->titulo}}</option>
                         @else
                         <option value="{{$t->id}}">{{$t->titulo}}</option>
@@ -31,8 +37,8 @@
                       </select>
                     </div>
                     <div class="col-md-3">
-                    <label for="user_email">Novo tema:</label>
-                    <button type="button" data-toggle="modal" data-target="#modal-default" class="btn btn-sm btn-default"><i class="fas fa-plus"></i> novo tema</button>
+                    <label for="user_email">*Novo tema:</label>
+                    <button style="background: #434B66;color: white;" type="button" data-toggle="modal" data-target="#modal-default" class="btn btn-sm btn-default"><i class="fas fa-plus"></i> novo tema</button>
                     </div>
                     </div>
                   </div>
@@ -44,7 +50,11 @@
                       <select class="form-control form-control-sm" name="orientador_id" id="orientador_id">
                         <option selected value=""></option>
                         @foreach($professores as $p)  
-                        <option value="{{$p->id}}">Prof° {{$p->name}}</option>
+                        @if(Request::old('orientador_id') == $p->id)
+                          <option selected value="{{$p->id}}">Prof° {{$p->name}}</option>
+                        @else 
+                          <option value="{{$p->id}}">Prof° {{$p->name}}</option>
+                        @endif
                         @endforeach
                       </select>
                     </div>
@@ -52,11 +62,18 @@
                   @if(isset($alunos))
                   <div class="col-4">
                     <div class="form-group">
-                      <label for="user_name">Aluno:</label>
+                      <label for="user_name">*Aluno:</label>
+                      @error('aluno_id')
+                          <div style="color: red; font-size: 10px;" class="error">{{ $message }}</div>
+                      @enderror
                       <select class="form-control form-control-sm" name="aluno_id" id="aluno_id">
                         <option selected value=""></option>
                         @foreach($alunos as $a)  
-                        <option value="{{$a->id}}">{{$a->name}} | {{$a->turma}}</option>
+                        @if(Request::old('aluno_id') == $a->id)
+                          <option selected value="{{$a->id}}">{{$a->name}} | {{$a->turma}}</option>
+                        @else 
+                          <option value="{{$a->id}}">{{$a->name}} | {{$a->turma}}</option>
+                        @endif
                         @endforeach
                       </select>
                     </div>
@@ -65,18 +82,21 @@
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <label for="theme-description">Descrição do trabalho:</label>
-                        <textarea style="width: 100%;" name="descricao" class="textarea form-control" rows="5" cols="700" placeholder="Descreva o seu projeto..."></textarea>
+                        <label for="theme-description">*Descrição do trabalho:</label>
+                        @error('descricao')
+                          <div style="color: red; font-size: 10px;" class="error">{{ $message }}</div>
+                      @enderror
+                        <textarea style="width: 100%;" name="descricao" class="textarea form-control" rows="5" cols="700" placeholder="Descreva o seu projeto...">{{Request::old('descricao')}}</textarea>
                         <script> CKEDITOR.replace( 'descricao', {width: 1230 }); </script>
                         
                     </div>
                 </div>
                 <div class="row">
                   <div class="col-md-1">
-                  <button class="btn btn-primary btn-sm">Cadastrar</button>
+                  <button style="background: #434B66;color: white;" class="btn btn-default btn-sm"><i class="fas fa-plus"></i> Cadastrar</button>
                   </div>
                   <div class="col-md-1">
-                  <a class="btn btn-danger btn-sm" href="#">Cancelar</a>
+                  <a style="background: #434B66;color: white;" class="btn btn-default btn-sm" href="#"><i class="fas fa-chevron-left"></i> Voltar</a>
                   </div>
                  
                 </div>
@@ -109,10 +129,10 @@
                 </div>
                 <div class="row">
                     <div class="col-2">
-                        <button id="savethemebtn" type="submit" class="btn btn-sm btn-default">Salvar</button>
+                        <button style="background: #434B66;color: white;" id="savethemebtn" type="submit" class="btn btn-sm btn-default"><i class="fas fa-plus"></i>Salvar</button>
                     </div>
                     <div class="col-2">
-                        <button id="closemodal" data-dismiss="modal"  class="btn btn-default btn-sm">Voltar</button>
+                        <button style="background: #434B66;color: white;" id="closemodal" data-dismiss="modal"  class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i> Voltar</button>
                     </div>
                 </div>
               </form>
@@ -126,8 +146,8 @@
       <script>
       $("#cadtheme").submit(function(event){
         event.preventDefault();
-        if (e.keyCode == 13) {               
-          e.preventDefault();
+        if (event.keyCode == 13) {               
+          event.preventDefault();
           return false;
          }
 

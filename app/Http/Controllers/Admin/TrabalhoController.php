@@ -8,6 +8,7 @@ use App\Trabalho;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Yoeunes\Toastr\Facades\Toastr;
 
 class TrabalhoController extends Controller
@@ -75,7 +76,52 @@ class TrabalhoController extends Controller
     {
         $user = Auth::user();
         $data = [];
-        
+        //Model User
+        $usermodel = User::find($user->id);
+        //
+        $count = 0;
+
+        foreach($usermodel->papeis as $p){
+            if($p->nome == "Admin" || $p->nome == "Professor" || $p->nome == "Coordenador"){
+                $count++;
+            }
+        }
+
+        if($count > 0){
+
+            $rules = [
+                'titulo' => 'required|min:10',
+                'tema_id' => 'required',
+                'aluno_id' => 'required',
+                'descricao' => 'required'
+            ];
+    
+            $validator = Validator::make($req->all(),$rules, $messages = [
+                'required' => 'O campo é obrigatório',
+                'min' => 'O campo precisa conter pelo menos 10 caracteres'
+            ]);
+    
+            if($validator->fails()){
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+        }else{
+            $rules = [
+                'titulo' => 'required|min:10',
+                'tema_id' => 'required',
+                'descricao' => 'required'
+            ];
+    
+            $validator = Validator::make($req->all(),$rules, $messages = [
+                'required' => 'O campo é obrigatório',
+                'min' => 'O campo precisa conter pelo menos 10 caracteres'
+            ]);
+    
+            if($validator->fails()){
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+        }
+
         if($req->aluno_id != null){
             $data = [
                 'titulo' => $req->titulo,
@@ -119,12 +165,12 @@ class TrabalhoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $req)
+    public function edit($id)
     {
         $user = Auth::user();
         $orientadores = User::getOrientadores();
         $temas = Tema::all();
-        $trabalho = Trabalho::find($req->trabalho_id);
+        $trabalho = Trabalho::find($id);
 
         return view('admin.trabalho.edit',compact('user','orientadores','temas','trabalho'));
     }
@@ -138,6 +184,24 @@ class TrabalhoController extends Controller
      */
     public function update(Request $req)
     {
+
+        $rules = [
+            'titulo' => 'required|min:10',
+            'tema_id' => 'required',
+            'aluno_id' => 'required',
+            'descricao' => 'required'
+        ];
+
+        $validator = Validator::make($req->all(),$rules, $messages = [
+            'required' => 'O campo é obrigatório',
+            'min' => 'O campo precisa conter pelo menos 10 caracteres'
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+
         $data = [
             'titulo' => $req->titulo,
             'descricao' => $req->descricao,

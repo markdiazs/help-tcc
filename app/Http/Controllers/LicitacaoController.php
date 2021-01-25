@@ -27,29 +27,15 @@ class LicitacaoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('userblock');
     }
 
     // adaptacao adminlte
 
     public function dashboard()
     {
-
         // user
         $user = Auth::user();
-        // var_dump($user);
-        // exit();
-         //recuperando as modalidades
-        $modalidades = Modalidade::All();
-        
-        // recuperando os anexos
-        $anexos = Anexo::all();
-         
-        // buscando licitacoes com base nos filtros
-        $licitacao = DB::table('licitacoes')->select('*')->paginate(5);
-        $qtd_licitacoes = count(DB::table('licitacoes')->select('*')->get());
-        $qtd_abertas = count(DB::table('licitacoes')->where('situacao', 1)->get());
-        $qtd_fechadas = count(DB::table('licitacoes')->where('situacao', 0)->get());
-
         $qtdtrabalhos = Trabalho::all()->count();
         $trabalhosalone = Trabalho::where('orientador_id','=',null)->get()->count();
         $mytrabalhos = Trabalho::where('user_id',$user->id)->orWhere('orientador_id',$user->id)->get()->count();
@@ -69,7 +55,7 @@ class LicitacaoController extends Controller
         $orientadores = User::getOrientadores();
         $temas = Tema::all();
  
-        return view('dashboard',compact('qtdtrabalhos','trabalhosalone','mytrabalhos', 'user', 'orientadores','temas','trabalhos'));
+        return view('dashboard',compact('qtdtrabalhos','trabalhosalone','mytrabalhos', 'user', 'orientadores','temas','trabalhos','p'));
 
     }
 

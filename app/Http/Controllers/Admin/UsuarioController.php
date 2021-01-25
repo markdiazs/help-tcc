@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Yoeunes\Toastr\Facades\Toastr;
 
 class UsuarioController extends Controller
@@ -27,6 +28,10 @@ class UsuarioController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+     public function __construct()
+     {
+       
+     }
      
 
     public function userBlock()
@@ -136,7 +141,8 @@ class UsuarioController extends Controller
 
     public function blacklist()
     {
-        return view('admin.usuario.blacklist');
+        $user = Auth::user();
+        return view('admin.usuario.blocklist',compact('user'));
     }
 
     /**
@@ -225,10 +231,37 @@ class UsuarioController extends Controller
     public function updateMyPerfil(Request $req)
     {
 
-        $this->validate($req,[
-            'user_password' => 'required'
+        $rules = [
+            'user_password' => 'required',
+            'user_email' => 'required',
+            'user_name' => 'required'
+        ];
+
+        if($req->new_password != null || $req->confirm_password !=null){
+            $new_pass = $req->new_password;
+            // array_push($rules,[
+            //     'new_password' => 'required',
+            //     'confirm_password' => 'required',Rule::in([$new_pass])
+            // ]);
+            $rules = [
+                'user_password' => 'required',
+                'user_email' => 'required',
+                'user_name' => 'required',
+                'new_password' => 'required',
+                'confirm_password' => 'required|in:'.$new_pass
+            ];
+        }
+
+        $validator = Validator::make($req->all(),$rules, $messages = [
+            'required' => 'O campo é obrigatório',
+            'min' => 'O campo precisa conter pelo menos 10 caracteres',
+            'in' => 'Senha não confere'
         ]);
 
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        
         $user = User::find(Auth::user()->id);
         $count = 0;
 
@@ -244,12 +277,21 @@ class UsuarioController extends Controller
             }
         }
 
-        $data = [
-            'name' => $req->user_name,
-            'email' => $req->user_email,
-            'whatsapp' => $req->user_whatsapp,
-            'password' => Hash::make($req->new_password)
-        ];
+        if($req->new_password != null || $req->confirm_password != null){
+            $data = [
+                'name' => $req->user_name,
+                'email' => $req->user_email,
+                'whatsapp' => $req->user_whatsapp,
+                'password' => Hash::make($req->new_password)
+            ];
+        }else {
+            $data = [
+                'name' => $req->user_name,
+                'email' => $req->user_email,
+                'whatsapp' => $req->user_whatsapp,
+                'password' => Hash::make($req->user_password)
+            ];
+        }
 
         foreach($data as $key => $value){
             if($value != null){
@@ -267,18 +309,33 @@ class UsuarioController extends Controller
         return redirect()->route('usuario.editmyperfil');   
     }
 
-    public function editMyJob(Request $req)
+    public function editMyJob($id)
     {
         $user = Auth::user();
         $orientadores = User::getOrientadores();
         $temas = Tema::all();
-        $trabalho = Trabalho::find($req->trabalho_id);
+        $trabalho = Trabalho::find($id);
 
         return view('admin.usuario.editmyjob',compact('user','orientadores','temas','trabalho'));
     }
 
     public function updateMyJob(Request $req)
     {
+        $rules = [
+            'titulo' => 'required|min:10',
+            'tema_id' => 'required',
+            'descricao' => 'required'
+        ];
+
+        $validator = Validator::make($req->all(),$rules, $messages = [
+            'required' => 'O campo é obrigatório',
+            'min' => 'O campo precisa conter pelo menos 10 caracteres'
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $data = [
             'titulo' => $req->titulo,
             'descricao' => $req->descricao,
@@ -304,7 +361,7 @@ class UsuarioController extends Controller
         $filters = $data;
         $user = Auth::user();
         $papeis = Papel::all();
-        $users = User::searchFilter($data)->paginate(5);
+        $users = User::searchFilter($data)->paginate(7);
 
         if (count($users) <= 0){
 
@@ -335,7 +392,18 @@ class UsuarioController extends Controller
         $user = Auth::user();
         $userModel = User::find($user->id);
         $trabalhos = Trabalho::where('user_id',$userModel->id)->orWhere('orientador_id',$userModel->id)->get();
-        return view('admin.usuario.myjobs',compact('user','trabalhos'));
+
+
+        if($user->status == 0){
+            return view('admin.usuario.blocklist',compact('user'));
+        }else{
+
+            return view('admin.usuario.myjobs',compact('user','trabalhos'));
+
+        }
+
+
+      
     }
 
     public function papelStore($papel_id,$user_id)

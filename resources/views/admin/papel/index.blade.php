@@ -55,7 +55,7 @@
                 <label class="col-md-2">Nova Permissão</label>
                 <select style="width: 400px;" class="form col-md-6" name="permissao" id="">
                 </select>
-                <a style="float: right;" href="#" class="btn btn-sm btn-default"><i class="fas fa-lock-open"></i> Desbloquear Permissão</a>
+                <a style="background: #434B66;color: white; float:right;" href="#" class="btn btn-sm btn-default"><i class="fas fa-lock-open"></i> Desbloquear Permissão</a>
                 </div>
               </div>
               <!-- /.card-body -->

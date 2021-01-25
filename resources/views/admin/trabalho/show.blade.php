@@ -9,7 +9,7 @@
               <h4 style="">{{$trabalho->titulo}}</h4>
               <h6 style="text-align: left;"><strong>Autor:</strong> {{$trabalho->user->name}}</h6>
               <h6 style="text-align: left;"><strong>Orientador:</strong> {{$trabalho->orientador != null?$trabalho->orientador->name: 'Sem orientador'}}</h6>
-              <h6 style="text-align: left;"><strong>Descrição:</strong><?php echo $trabalho->descricao; ?></h6>              
+              <h6 style="overflow: auto; max-height: 550px; text-align: left !important;"><strong>Descrição:</strong><?php echo $trabalho->descricao; ?></h6>              
               </div>
               <div class="card-footer">
               <div class="row">

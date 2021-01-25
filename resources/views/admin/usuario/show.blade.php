@@ -27,14 +27,11 @@
                   </li>
                 </ul>
 
-                <a  class="btn btn-default" href="{{route('usuario.editmyperfil')}}"  name="btn_alter_info" id="btn_alter_info"><i class="fas fa-wrench"></i><b>Alterar Informações</b></a>
-                <a href="/" class="btn btn-default"><i class="fas fa-chevron-left"></i><b>Voltar</b></a>
+                <a style="background: #434B66;color: white;"  class="btn btn-default btn-sm" href="{{route('usuario.editmyperfil')}}"  name="btn_alter_info" id="btn_alter_info"><i class="fas fa-wrench"></i><b>Alterar Informações</b></a>
+                <a style="background: #434B66;color: white;" href="/" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i><b>Voltar</b></a>
               </div>
               </div>
               <div class="card-footer">
-                <div id="form_alter" class="d-none">
-                  <h1>Testando!</h1>
-                </div>
               </div>
               <!-- /.card-body -->
             </div>

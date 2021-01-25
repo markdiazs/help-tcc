@@ -56,15 +56,12 @@ Route::post('admin/usuario/edit','Admin\UsuarioController@edit')->name('usuario.
 Route::post('admin/usuario/update','Admin\UsuarioController@update')->name('usuario.update');
 Route::get('admin/usuario/search','Admin\UsuarioController@searchFilter')->name('usuario.search');
 Route::post('admin/usuario/remove','Admin\UsuarioController@destroy')->name('usuario.delete');
-Route::post('admin/usuario/edit-my-job','Admin\UsuarioController@editMyJob')->name('usuario.editmyjob');
+Route::get('admin/usuario/edit-my-job/{id}','Admin\UsuarioController@editMyJob')->name('usuario.editmyjob');
 Route::post('admin/usuario/update-my-job','Admin\UsuarioController@updateMyJob')->name('usuario.updatemyjob');
 Route::post('admin/usuario/orientar-projeto','Admin\UsuarioController@orientarProject')->name('usuario.orientar');
 Route::get('admin/usuario/perfil','Admin\UsuarioController@show')->name('usuario.perfil');
 Route::get('admin/usuario/perfil/edit','Admin\UsuarioController@editmyperfil')->name('usuario.editmyperfil');
 Route::post('admin/usuario/perfil/update','Admin\UsuarioController@updateMyPerfil')->name('usuario.updatemyperfil');
-Route::get('admin/usuario/notificacoes', function(){
-    return Auth::user()->notifications;
-});
 
 //trabalho
 Route::get('admin/trabalho/create','Admin\TrabalhoController@create')->name('trabalho.create');

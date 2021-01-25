@@ -12,6 +12,11 @@ class TemaController extends Controller
 {
 
     
+    public function __construct()
+    {
+      
+    }
+
     public function store(Request $req)
     {
         $temas = Tema::all();

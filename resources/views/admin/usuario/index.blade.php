@@ -69,10 +69,10 @@
                     </tr>
                     @endforeach
                     @else 
-                    <div class="alert alert-info alert-dismissible">
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                      <h6><i class="fas fa-info-circle"></i> <b> Não há registros correspondes aos filtros selecionados </b></h6>
-                    </div>
+                    <div  style="margin-top: 20px; background-color: #dc3545; color: white; border: none;" class="alert alert-info alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h6 style="font-size: 13px;"><i class="fas fa-info-circle"></i> <b> Não há registros correspondes</b></h6>
+                      </div>
                     @endif
                   </tbody>
                   
@@ -116,8 +116,8 @@
                         </div>
                         <div class="row">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-sm btn-default"><i class="fas fa-search"></i> Buscar</button>
-                                <a href="{{route('usuario.index')}}" class="btn btn-sm btn-default"><i class="fas fa-filter"></i> Limpar filtros</a>
+                                <button style="background: #434B66;color: white;" type="submit" class="btn btn-sm btn-default"><i class="fas fa-search"></i> Buscar</button>
+                                <a style="background: #434B66;color: white;" href="{{route('usuario.index')}}" class="btn btn-sm btn-default"><i class="fas fa-filter"></i> Limpar filtros</a>
                             </div>
                         </div>
                     </form>

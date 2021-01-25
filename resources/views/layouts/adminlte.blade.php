@@ -45,6 +45,9 @@
     
 
     <ul class="navbar-nav ml-auto">
+    <li class="nav-item d-none d-sm-inline-block">
+    <a title="ajuda" href="#" class="nav-link"><i class="fas fa-info-circle"></i></a>
+          </li>
     <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false" id="btn_notify">
           <i class="far fa-bell"></i>
@@ -99,9 +102,6 @@
             <!-- /.row -->
           </li>
     </ul>
-    <li class="nav-item d-none d-sm-inline-block">
-    <a href="#" class="nav-link"><i class="fas fa-info-circle"></i> Ajuda</a>
-          </li>
   </nav>
   <!-- /.navbar -->
 

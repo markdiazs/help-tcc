@@ -11,10 +11,12 @@
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">
-                      <label for="user_name">*Título:</label>
-                      @error('titulo')
-                          <div style="color: red; font-size: 10px;" class="error">{{ $message }}</div>
-                      @enderror
+                      <label for="user_name">*Título:
+                        @error('titulo')
+                          <span style="color: red; font-size: 10px;" class="error">{{ $message }}</span>
+                        @enderror
+                      </label>
+
                       <input class="form-control form-control-sm" type="text" id="titulo" name="titulo" placeholder="" value="{{ Request::old('titulo') }}">
                     </div>
                   </div>
@@ -23,7 +25,7 @@
                     <div class="form-group col-md-8">
                       <label for="user_email">*Tema:</label>
                       @error('tema_id')
-                          <div style="color: red; font-size: 10px;" class="error">{{ $message }}</div>
+                          <span style="color: red; font-size: 10px;" class="error">{{ $message }}</span>
                       @enderror
                       <select class="form-control form-control-sm" name="tema_id" id="tema_id">
                         @foreach($temas as $t)
@@ -62,10 +64,12 @@
                   @if(isset($alunos))
                   <div class="col-4">
                     <div class="form-group">
-                      <label for="user_name">*Aluno:</label>
-                      @error('aluno_id')
-                          <div style="color: red; font-size: 10px;" class="error">{{ $message }}</div>
-                      @enderror
+                      <label for="user_name">*Aluno:
+                        @error('aluno_id')
+                          <span style="color: red; font-size: 10px;" class="error">{{ $message }}</span>
+                        @enderror
+                      </label>
+
                       <select class="form-control form-control-sm" name="aluno_id" id="aluno_id">
                         <option selected value=""></option>
                         @foreach($alunos as $a)  
@@ -82,10 +86,11 @@
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <label for="theme-description">*Descrição do trabalho:</label>
-                        @error('descricao')
-                          <div style="color: red; font-size: 10px;" class="error">{{ $message }}</div>
-                      @enderror
+                        <label for="theme-description">*Descrição do trabalho:
+                          @error('descricao')
+                          <span style="color: red; font-size: 10px;" class="error">{{ $message }}</span>
+                          @enderror
+                        </label>
                         <textarea style="width: 100%;" name="descricao" class="textarea form-control" rows="5" cols="700" placeholder="Descreva o seu projeto...">{{Request::old('descricao')}}</textarea>
                         <script> CKEDITOR.replace( 'descricao', {width: 1230 }); </script>
                         
@@ -96,7 +101,7 @@
                   <button style="background: #434B66;color: white;" class="btn btn-default btn-sm"><i class="fas fa-plus"></i> Cadastrar</button>
                   </div>
                   <div class="col-md-1">
-                  <a style="background: #434B66;color: white;" class="btn btn-default btn-sm" href="#"><i class="fas fa-chevron-left"></i> Voltar</a>
+                  <a style="background: #434B66;color: white;" class="btn btn-default btn-sm" href="{{URL::previous()}}"><i class="fas fa-chevron-left"></i> Voltar</a>
                   </div>
                  
                 </div>

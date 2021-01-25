@@ -6,29 +6,27 @@
                 <h3 class="card-title"><i class="fas fa-users-cog"></i></h3>
               </div>
               <div class="card-body">
-              @if (count($errors) > 0)
-                <div class="alert alert-danger">
-                <ul style="font-size: 13px;">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                </div>
-              @endif
-
               <form action="{{route('usuario.updatemyperfil')}}" method="POST">
               {{csrf_field()}}
               <div class="row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="">Nome:</label>
-                        <input type="text" class="form-control form-control-sm" name="user_name" value="{{$user->name}}">
+                        <label for="">*Nome: 
+                            @error('user_name')
+                                <span style="color: red; font-size: 10px;" class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
+                        <input type="text" class="form-control form-control-sm" name="user_name" value="{{Request::old('user_name')!=null?Request::old('user_name'):$user->name}}">
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="">E-mail:</label>
-                        <input type="email" class="form-control form-control-sm" name="user_email" value="{{$user->email}}">
+                        <label for="">*E-mail:
+                            @error('user_email')
+                                <span style="color: red; font-size: 10px;" class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
+                        <input type="email" class="form-control form-control-sm" name="user_email" value="{{Request::old('user_email')!=null?Request::old('user_email'):$user->email}}">
                     </div>
                 </div>
               </div>
@@ -42,36 +40,48 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label for="">Whatsapp:</label>
-                        <input type="text" class="form-control form-control-sm" name="user_whatsapp" value="{{$user->whatsapp}}" placeholder="{{$user->whatsapp != null? '': 'whatsapp não cadastrado'}}">
+                        <input type="text" class="form-control form-control-sm" name="user_whatsapp" value="{{$user->whatsapp}}" value="{{Request::old('user_whatsapp')!=null?Request::old('user_whatsapp'):$user->whatsapp}}">
                     </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="">Nova senha:</label>
+                        <label for="">Nova senha:
+                            @error('new_password')
+                                <span style="color: red; font-size: 10px;" class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
                         <input type="password" class="form-control form-control-sm" name="new_password">
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="">Digite a senha novamente por favor:</label>
+                        <label for="">Digite a senha novamente por favor:
+                            @error('confirm_password')
+                                <span style="color: red; font-size: 10px;" class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
                         <input type="password" class="form-control form-control-sm" name="confirm_password">
                     </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-4">
+                <div class="col-6">
                     <div class="form-group">
-                        <label for=""><i class="fas fa-exclamation-triangle"></i> Digite a sua senha atual para confirmar as suas alterações:</label>
+                        <label for=""><i class="fas fa-exclamation-triangle"></i>*Digite a sua senha atual para confirmar as suas alterações: 
+                            @error('user_password')
+                                <span style="color: red; font-size: 10px;" class="error">{{ $message }}</span>
+                            @enderror
+                        </label>
                         <input type="password" name="user_password" id="user_password" class="form-control form-control-sm">
                     </div>
                 </div>
               </div>
               <div class="row">
                 <div class="form-group">
-                    <button type="submit" class="btn btn-default btn-sm">Salvar</button>
-                    <a href="{{route('usuario.perfil')}}" class="btn btn-default btn-sm">Voltar</a>
+                    <button style="background: #434B66;color: white;" type="submit" class="btn btn-default btn-sm"><i class="fas fa-sync"></i>Atualizar</button>
+                    <a style="background: #434B66;color: white;" href="{{route('usuario.perfil')}}" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i>Voltar</a>
                 </div>
               </div>
               </form>

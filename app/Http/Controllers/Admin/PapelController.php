@@ -16,6 +16,11 @@ class PapelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function __construct()
+     {
+     
+     }
     
     public function index()
     {
@@ -29,8 +34,9 @@ class PapelController extends Controller
         $user = Auth::user();
         $papeis = Papel::where('nome','!=','Admin')->get();
         $papel = Papel::find($id);
+        $papel_permissao = $papel->permissoes()->paginate(7);
         $permissao = Permissao::all();
-        return view('admin.papel.permissao',compact('user','papeis','papel','permissao'));
+        return view('admin.papel.permissao',compact('user','papeis','papel','permissao','papel_permissao'));
     }
 
     public function permissaoStore(Request $request)

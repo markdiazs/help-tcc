@@ -13,6 +13,9 @@
                   <div class="col-6">
                     <div class="form-group">
                       <label for="user_name">Título:</label>
+                      @error('titulo')
+                          <div style="color: red; font-size: 10px;" class="error">{{ $message }}</div>
+                      @enderror
                       <input class="form-control form-control-sm" type="text" id="titulo" name="titulo" placeholder="" value="{{$trabalho->titulo}}">
                     </div>
                   </div>
@@ -54,16 +57,19 @@
                 <div class="row">
                     <div class="form-group">
                         <label for="theme-description">Descrição do trabalho:</label>
+                        @error('descricao')
+                          <div style="color: red; font-size: 10px;" class="error">{{ $message }}</div>
+                      @enderror
                         <textarea name="descricao" class="textarea form-control" rows="5" cols="400" placeholder="Descreva o seu projeto...">{{$trabalho->descricao}}</textarea>
                         
                     </div>
                 </div>
                 <div class="row">
                   <div class="col-md-1">
-                  <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-sync"></i> atualizar</button>
+                  <button style="background: #434B66;color: white;border:none;" type="submit" class="btn btn-primary btn-sm"><i class="fas fa-sync"></i> atualizar</button>
                   </div>
                   <div class="col-md-1">
-                  <a class="btn btn-danger btn-sm" href="{{URL::previous()}}"><i class="fas fa-chevron-left"></i> voltar</a>
+                  <a style="background: #434B66;color: white;border:none;" class="btn btn-danger btn-sm" href="{{URL::previous()}}"><i class="fas fa-chevron-left"></i> voltar</a>
                   </div>
                  
                 </div>

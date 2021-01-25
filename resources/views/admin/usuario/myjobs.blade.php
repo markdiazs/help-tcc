@@ -25,11 +25,9 @@
                               <input type="hidden" value="{{$t->id}}" name="trabalho_id">
                               <button type="submit" style="margin: 0 10px;" class="btn-sm btn btn-button btn-default" title="visualizar trabalho"><i class="fas fa-eye"></i></button>
                             </form>
-                            <form action="{{route('usuario.editmyjob')}}" method="POST">
-                          {{csrf_field()}}
-                          <input type="hidden" name="trabalho_id" value="{{$t->id}}">
-                          <button style="margin: 0 10px;" type="submit" class="btn-sm btn btn-button btn-default" title="Editar trabalho"><i class="fas fa-edit"></i></button>
-                          </form>
+
+                          <a style="margin: 0 10px;" href="{{ route('usuario.editmyjob',$t->id) }}" class="btn-sm btn btn-button btn-default" title="Editar trabalho"><i class="fas fa-edit"></i></a>
+      
                           <form action="{{route('trabalho.delete')}}" method="POST">
                             {{ csrf_field()}}
                             <input type="hidden" value="{{$t->id}}" name="trabalho_id">

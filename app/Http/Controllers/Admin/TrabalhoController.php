@@ -8,6 +8,8 @@ use App\Trabalho;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Yoeunes\Toastr\Facades\Toastr;
 
@@ -18,10 +20,17 @@ class TrabalhoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function __construct()
+     {
+        
+     }
+
+
     public function index()
     {
         $user = Auth::user();
-        $trabalhos = Trabalho::select('*')->paginate(5);
+        $trabalhos = Trabalho::select('*')->paginate(7);
         $orientadores = User::getOrientadores();
         $temas = Tema::all();
 
@@ -35,6 +44,11 @@ class TrabalhoController extends Controller
      */
     public function create()
     {
+     
+        if(Gate::denies('trabalho-create')){
+            abort(403, "Não autorizado");
+        }
+
         $user = Auth::user();
         $count = 0;
         $alunos = null;
@@ -74,6 +88,11 @@ class TrabalhoController extends Controller
 
     public static function store(Request $req)
     {
+
+        if(Gate::denies('trabalho-create')){
+            abort(403, "Não autorizado");
+        }
+
         $user = Auth::user();
         $data = [];
         //Model User
@@ -154,8 +173,9 @@ class TrabalhoController extends Controller
      */
     public function show(Request $req)
     {
-        $user = Auth::user();
+        $user = User::find(Auth::user()->id);
         $trabalho = Trabalho::find($req->trabalho_id);
+
         return view('admin.trabalho.show',compact('user','trabalho'));
     }
 
@@ -167,10 +187,32 @@ class TrabalhoController extends Controller
      */
     public function edit($id)
     {
-        $user = Auth::user();
+
+        $user = User::find(Auth::user()->id);
         $orientadores = User::getOrientadores();
         $temas = Tema::all();
         $trabalho = Trabalho::find($id);
+        $aluno = false;
+        $admin = false;
+
+        foreach($user->papeis as $p){
+            if($p->nome == "Aluno"){
+                $aluno = true;
+            }elseif($p->nome == "Admin"){
+                $admin = true;
+            }
+        }
+
+        if(!$admin){
+            if($aluno){
+                if(Gate::denies('trabalho-edit') || $trabalho->user_id != $user->id){
+                    abort(403,"Não autorizado");
+                }
+            }elseif(Gate::denies('trabalho-edit') || $trabalho->orientador_id != $user->id){
+                    abort(403,"Não autorizado");
+            }
+
+        }
 
         return view('admin.trabalho.edit',compact('user','orientadores','temas','trabalho'));
     }
@@ -185,10 +227,33 @@ class TrabalhoController extends Controller
     public function update(Request $req)
     {
 
+        $user = User::find(Auth::user()->id);
+        $trabalho = Trabalho::find($req->trabalho_id);
+        $aluno = false;
+        $admin = false;
+
+        foreach($user->papeis as $p){
+            if($p->nome == "Aluno"){
+                $aluno = true;
+            }elseif($p->nome == "Admin"){
+                $admin = true;
+            }
+        }
+
+        if(!$admin){
+            if($aluno){
+                if(Gate::denies('trabalho-edit') || $trabalho->user_id != $user->id){
+                    abort(403,"Não autorizado");
+                }
+            }elseif(Gate::denies('trabalho-edit') || $trabalho->orientador_id != $user->id){
+                    abort(403,"Não autorizado");
+            }
+
+        }
+
         $rules = [
             'titulo' => 'required|min:10',
             'tema_id' => 'required',
-            'aluno_id' => 'required',
             'descricao' => 'required'
         ];
 
@@ -227,10 +292,21 @@ class TrabalhoController extends Controller
     public function delete(Request $req)
     {
         $user = User::find(Auth::user()->id);
+        $trabalho = Trabalho::find($req->trabalho_id);
         $count = 0;
+        $aluno = false;
+        $admin = false;
         foreach($user->papeis as $p){
-            if($p->nome == "Professor" || $p->nome == "Coordenador" || $p->nome = "Admin" && url()->current() == route('usuario.myjobs')){
-                $count++;
+            if($p->nome == "Professor" || $p->nome == "Coordenador" || $p->nome = "Admin" && URL::previous() == route('usuario.myjobs') && $trabalho->user_id != $user->id){
+                $count += 1;
+                // var_dump($count);
+                // exit();
+            }
+            if($p->nome == 'Aluno'){
+                $aluno = true;
+            }
+            if($p->nome == 'Admin'){
+                $admin = true;
             }
         }
 
@@ -238,6 +314,17 @@ class TrabalhoController extends Controller
         $trabalho = Trabalho::find($req->trabalho_id);
 
         if($count <= 0){
+            if(!$admin){
+                if(!$aluno){
+                    if (Gate::denies('trabalho-delete') || $user->id != $trabalho->orientador_id && $trabalho->user_id != $user->id) {
+                        abort(403, "Não autorizado");
+                    }
+                }else{
+                    if(Gate::denies('trabalho-delete') || $user->id != $trabalho->user_id && $trabalho->orientador_id != $user->id){
+                        abort(403, "Não autorizado");
+                    }
+                }
+            }
             $trabalho->delete();
             Toastr::success('Trabalho excluido com sucesso');
         }else{
@@ -268,11 +355,10 @@ class TrabalhoController extends Controller
             'orientador_id' => $req->orientador_id,
             'tema_id' => $req->tema_id
         ];
-        $trabalhos = Trabalho::search($filters)->paginate(5);
+        $trabalhos = Trabalho::search($filters)->paginate(7);
         $orientadores = User::getOrientadores();
         $temas = Tema::all();
         $user = Auth::user();
-
         return view('admin.trabalho.index',compact('trabalhos','orientadores','temas','user','filters'));
     }
 }

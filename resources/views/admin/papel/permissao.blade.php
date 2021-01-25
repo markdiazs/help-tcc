@@ -39,7 +39,7 @@
                   </thead>
                   <tbody>
                       @if(count($papel->permissoes) != 0)
-                      @foreach($papel->permissoes as $p)
+                      @foreach($papel_permissao as $p)
                     <tr>
                       <td>{{$p->nome}}</td>
                       <td>{{$p->descricao}}</td>
@@ -53,6 +53,7 @@
                           
                     </tr>
                       @endforeach
+
                       @else 
                      <tr>
                          <td rowspan="2"><h6>Não possui permissões cadastradas</h6></td>
@@ -60,6 +61,7 @@
                       @endif
                   </tbody>
                 </table>
+                {!! $papel_permissao->links() !!}
               </div>
               <!-- /.card-body -->
             </div>
@@ -79,7 +81,7 @@
                   @endforeach
                 </select>
                 @endif
-                <button type="submit" style="float: right;" class="btn btn-sm btn-default"><i class="fas fa-lock-open"></i> Desbloquear Permissão</button>
+                <button style="background: #434B66;color: white;float: right;" type="submit" class="btn btn-sm btn-default"><i class="fas fa-lock-open"></i> Desbloquear Permissão</button>
                 </div>
                 </form>
 

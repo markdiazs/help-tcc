@@ -44,7 +44,7 @@ class Trabalho extends Model
             }
             if($filters['tema_id'] == null && $filters['orientador_id'] != null && $filters['titulo'] != null){
                 $query->where('orientador_id',$filters['orientador_id'])
-                ->query->where('titulo',$filters['titulo']);
+                ->where('titulo',$filters['titulo']);
             }
             if($filters['tema_id'] != null && $filters['orientador_id'] == null && $filters['titulo'] != null){
                 $query->where('titulo',$filters['titulo'])

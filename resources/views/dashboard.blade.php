@@ -1,6 +1,10 @@
 @extends('layouts.adminlte',["current" => "Início"])
 
 @section('body')
+<script>
+window.Echo.private('channelName').listen('EventName',function(e){
+})
+</script>
 <div class="row" style="width: 81%; margin: 0 auto;">
 <div class="col-12 col-sm-6 col-md-4">
             <div class="info-box">

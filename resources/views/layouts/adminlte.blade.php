@@ -15,6 +15,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" integrity="sha512-Oy18vBnbSJkXTndr2n6lDMO5NN31UljR8e/ICzVPrGpSud4Gkckb8yUpqhKuUNoE+o9gAb4O/rAxxw1ojyUVzg==" crossorigin="anonymous" />
   <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
   @toastr_css
 
@@ -46,7 +47,7 @@
 
     <ul class="navbar-nav ml-auto">
     <li class="nav-item d-none d-sm-inline-block">
-    <a title="ajuda" href="#" class="nav-link"><i class="fas fa-info-circle"></i></a>
+    <a title="ajuda" href="{{route('system.help')}}" class="nav-link"><i class="fas fa-info-circle"></i></a>
           </li>
     <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false" id="btn_notify">

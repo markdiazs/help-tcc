@@ -17,14 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/','LicitacaoController@dashboard');
-Route::get('/novalicitacao','LicitacaoController@create');
-Route::post('/novalicitacao/store','LicitacaoController@store');
-Route::get('/busca','LicitacaoController@busca');
-Route::get('/licitacao/{id}','LicitacaoController@consulta');
-Route::get('/download/{id}','LicitacaoController@baixarArquivo');
-Route::get('/graficoanual','GraficoController@index');
-Route::post('/graficoanual','GraficoController@getLicitacoes');
-Route::get('/graficoanualapi','GraficoController@getJson');
+Route::get('/help','LicitacaoController@help')->name('system.help');
 
 Route::get('/licitacao/editar/{id}','LicitacaoController@edit');
 Route::post('/licitacao/update/{id}','LicitacaoController@update');

@@ -13,6 +13,7 @@
                       <th>Tema</th>
                     </tr>
                   </thead>
+                  @if(count($trabalhos) > 0)
                   <tbody>
                     @foreach($trabalhos as $t)
                     <tr>
@@ -38,6 +39,12 @@
                     </tr>
                     @endforeach
                   </tbody>
+                  @else
+                  <div  style="margin-top: 20px; background-color: #dc3545; color: white; border: none;" class="alert alert-info alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h6 style="font-size: 13px;"><i class="fas fa-info-circle"></i> <b> Não há registros correspondes</b></h6>
+                  </div>
+                  @endif
                 </table>
               </div>
               <div class="card-footer">

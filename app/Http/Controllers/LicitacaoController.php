@@ -59,6 +59,13 @@ class LicitacaoController extends Controller
 
     }
 
+
+    public function help()
+    {
+        $user = Auth::user();
+        return view('admin.help.help',compact('user'));
+    }
+
     public function cadCategoria(){
         // user
         $user = Auth::user();
